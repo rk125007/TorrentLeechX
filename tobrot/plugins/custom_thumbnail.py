@@ -6,7 +6,7 @@ import os
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from PIL import Image
-from tobrot import DOWNLOAD_LOCATION
+from tobrot import DOWNLOAD_LOCATION, CLEAR_THUMBNAIL
 
 
 async def save_thumb_nail(client, message):
@@ -39,7 +39,7 @@ async def save_thumb_nail(client, message):
         os.remove(downloaded_file_name)
         await ismgs.edit(
             "✅ Custom video / file thumbnail saved. "
-            + "This image will be used in the upload, till /clearthumbnail."
+            + f"This image will be used in the upload, till /{CLEAR_THUMBNAIL}"
         )
     else:
         await ismgs.edit("❌ Reply to a photo to save custom thumbnail")

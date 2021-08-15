@@ -22,6 +22,7 @@ from tobrot import (
     CUSTOM_FILE_NAME,
     DOWNLOAD_LOCATION,
     EDIT_SLEEP_TIME_OUT,
+    DELAY_UPLOAD_TG,
     LOGGER,
     MAX_TIME_TO_WAIT_FOR_TORRENTS_TO_START,
 )
@@ -325,12 +326,12 @@ async def check_progress_for_dl(aria2, gid, event, previous_message):
                 # await check_progress_for_dl(aria2, gid, event, previous_message)
             else:
                 LOGGER.info(
-                    f"Downloaded Successfully: `{file.name} ({file.total_length_string()})` 🤒"
+                    f"Downloaded Successfully: `{file.name} ({file.total_length_string()})`Upload start in <b>{DELAY_UPLOAD_TG}</b>second"
                 )
                 # await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
                 if not file.is_metadata:
                     await event.edit(
-                        f"Downloaded Successfully: `{file.name} ({file.total_length_string()})` 🤒"
+                        f"Downloaded Successfully: `{file.name} ({file.total_length_string()})`\nUpload start in <b>{DELAY_UPLOAD_TG}</b>second"
                     )
                 return
         except aria2p.client.ClientException:

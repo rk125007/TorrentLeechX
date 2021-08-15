@@ -26,6 +26,8 @@ from tobrot import (
     DESTINATION_FOLDER,
     DOWNLOAD_LOCATION,
     EDIT_SLEEP_TIME_OUT,
+    DELAY_UPLOAD_TG,
+    DELAY_UPLOAD_GD,
     INDEX_LINK,
     LOGGER,
     RCLONE_CONFIG,
@@ -145,7 +147,7 @@ async def upload_to_tg(
 
 
 async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
-    await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
+    await asyncio.sleep(DELAY_UPLOAD_GD)
     del_it = await message.edit_text(
         f"<a href='tg://user?id={g_id}'>🔊</a> Now Uploading to ☁️ Cloud!!!"
     )
@@ -303,7 +305,7 @@ async def upload_to_gdrive(file_upload, message, messa_ge, g_id):
 async def upload_single_file(
     message, local_file_name, caption_str, from_user, client, edit_media, yt_thumb
 ):
-    await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
+    await asyncio.sleep(DELAY_UPLOAD_TG)
     local_file_name = str(Path(local_file_name).resolve())
     sent_message = None
     start_time = time.time()
@@ -433,7 +435,7 @@ async def upload_single_file(
                     thumb = thumb_image_path
                 # send video
                 if edit_media and message.photo:
-                    await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
+                    await asyncio.sleep(DELAY_UPLOAD_TG)
                     sent_message = await message.edit_media(
                         media=InputMediaVideo(
                             media=local_file_name,
@@ -488,7 +490,7 @@ async def upload_single_file(
                     thumb = thumb_image_path
                 # send audio
                 if edit_media and message.photo:
-                    await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
+                    await asyncio.sleep(DELAY_UPLOAD_TG)
                     sent_message = await message.edit_media(
                         media=InputMediaAudio(
                             media=local_file_name,

@@ -35,12 +35,12 @@ async def down_load_media_f(client, message):  # to be removed
             except Exception as ge:
                 LOGGER.info(ge)
                 LOGGER.info(
-                    f"Can't extract {os.path.basename(the_real_download_location)}, Uploading the same file"
+                    f"🔴 ᴄᴀɴᴛ ᴇxᴛʀᴀᴄᴛ 🔴\n\n{os.path.basename(the_real_download_location)}\n\nᴡɪʟʟ ᴜᴘʟᴏᴀᴅɪɴɢ sᴀᴍᴇ ғɪʟᴇ"
                 )
         await upload_to_gdrive(the_real_download_location_g, mess_age, message, user_id)
     else:
         await mess_age.edit_text(
-            "Reply to a Telegram Media, to upload to the Cloud Drive."
+            "🟡 ʀᴇᴘʟʏ ᴛᴏ ᴍᴇᴅɪᴀ 🟡"
         )
 
 
@@ -75,9 +75,9 @@ async def download_tg(client, message):
         await asyncio.sleep(2)
         if the_real_download_location:
             await mess_age.edit_text(
-                f"Downloaded to <code>{the_real_download_location}</code> in <u>{ms}</u> seconds"
+                f"🟢 ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ 🟢\n\n<code>{the_real_download_location}</code>\n\n<u>{ms}</u>sᴇᴄᴏɴᴅs"
             )
         else:
-            await mess_age.edit_text("😔 Download Cancelled or some error happened")
+            await mess_age.edit_text("🔴 ᴅᴏᴡɴʟᴏᴀᴅ sᴛᴏᴘᴘᴇᴅ 🔴")
             return None, mess_age
     return the_real_download_location, mess_age

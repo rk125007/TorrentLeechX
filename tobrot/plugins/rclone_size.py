@@ -13,7 +13,7 @@ from tobrot import DESTINATION_FOLDER, EDIT_SLEEP_TIME_OUT, LOGGER, RCLONE_CONFI
 
 async def check_size_g(client, message):
     # await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
-    del_it = await message.reply_text("🤖Checking size of the cloud folder...wait!!!")
+    del_it = await message.reply_text("ᴄʜᴇᴄᴋɪɴɢ sɪᴢᴇ")
     if not os.path.exists("rclone.conf"):
         with open("rclone.conf", "w+", newline="\n", encoding="utf-8") as fole:
             fole.write(f"{RCLONE_CONFIG}")
@@ -34,7 +34,7 @@ async def check_size_g(client, message):
     gautam = gau.decode("utf-8")
     LOGGER.info(gautam)
     await asyncio.sleep(5)
-    await message.reply_text(f"🔊CloudInfo:\n\n{gautam}")
+    await message.reply_text(f"ℹ️ ɢᴏᴏɢʟᴇ ᴅʀɪᴠᴇ ɪɴғᴏ ℹ️\n\n{gautam}")
     await del_it.delete()
 
 
@@ -45,15 +45,15 @@ async def g_clearme(client, message):
     inline_keyboard = []
     ikeyboard = []
     ikeyboard.append(
-        InlineKeyboardButton("Yes 🚫", callback_data=("fuckingdo").encode("UTF-8"))
+        InlineKeyboardButton("🟢", callback_data=("fuckingdo").encode("UTF-8"))
     )
     ikeyboard.append(
-        InlineKeyboardButton("No 🤗", callback_data=("fuckoff").encode("UTF-8"))
+        InlineKeyboardButton("🔴", callback_data=("fuckoff").encode("UTF-8"))
     )
     inline_keyboard.append(ikeyboard)
     reply_markup = InlineKeyboardMarkup(inline_keyboard)
     await message.reply_text(
-        "Are you sure? 🚫 This will delete all your downloads locally 🚫",
+        "ᴛʜɪs ᴡɪʟʟ ᴅᴇʟᴇᴛᴇ ғɪʟᴇ",
         reply_markup=reply_markup,
         quote=True,
     )

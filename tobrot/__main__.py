@@ -52,7 +52,6 @@ from tobrot.plugins.choose_rclone_config import rclone_command_f
 from tobrot.plugins.custom_thumbnail import clear_thumb_nail, save_thumb_nail
 from tobrot.plugins.incoming_message_fn import (g_clonee, g_yt_playlist,
                                                 incoming_message_f,
-                                                incoming_purge_message_f,
                                                 incoming_youtube_dl_f,
                                                 rename_tg_file)
 from tobrot.plugins.new_join_fn import help_message_f, new_join_f
@@ -103,12 +102,6 @@ if __name__ == "__main__":
         & filters.chat(chats=AUTH_CHANNEL),
     )
     app.add_handler(incoming_telegram_download_handler)
-    #
-    incoming_purge_message_handler = MessageHandler(
-        incoming_purge_message_f,
-        filters=filters.command(["purge"]) & filters.chat(chats=AUTH_CHANNEL),
-    )
-    app.add_handler(incoming_purge_message_handler)
     #
     incoming_clone_handler = MessageHandler(
         g_clonee,

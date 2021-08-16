@@ -14,7 +14,7 @@ async def save_thumb_nail(client, message):
     thumb_image_path = os.path.join(
         thumbnail_location, str(message.from_user.id) + ".jpg"
     )
-    ismgs = await message.reply_text("processing ...")
+    ismgs = await message.reply_text("ᴘʀᴏᴄᴇssɪɴɢ")
     if message.reply_to_message is not None:
         if not os.path.isdir(thumbnail_location):
             os.makedirs(thumbnail_location)
@@ -38,11 +38,11 @@ async def save_thumb_nail(client, message):
         # https://pillow.readthedocs.io/en/3.1.x/reference/Image.html#create-thumbnails
         os.remove(downloaded_file_name)
         await ismgs.edit(
-            "✅ Custom video / file thumbnail saved. "
-            + f"This image will be used in the upload, till /{CLEAR_THUMBNAIL}"
+            "🟢 ᴛʜᴜᴍʙɴᴀɪʟ sᴀᴠᴇᴅ 🟢"
+            + f"\n\nᴡɪʟʟ ᴜsᴇ ᴜɴᴛɪʟ <code>/{CLEAR_THUMBNAIL}</code>"
         )
     else:
-        await ismgs.edit("❌ Reply to a photo to save custom thumbnail")
+        await ismgs.edit("🔴 ʀᴇᴘʟʏ ᴛᴏ ᴘʜᴏᴛᴏ 🔴")
 
 
 async def clear_thumb_nail(client, message):
@@ -50,9 +50,9 @@ async def clear_thumb_nail(client, message):
     thumb_image_path = os.path.join(
         thumbnail_location, str(message.from_user.id) + ".jpg"
     )
-    ismgs = await message.reply_text("processing ...")
+    ismgs = await message.reply_text("ᴘʀᴏᴄᴇssɪɴɢ")
     if os.path.exists(thumb_image_path):
         os.remove(thumb_image_path)
-        await ismgs.edit("✅ Custom thumbnail cleared successfully.")
+        await ismgs.edit("⚫ ᴛʜᴜᴍʙɴᴀɪʟ ᴅᴇʟᴇᴛᴇᴅ ⚫")
     else:
-        await ismgs.edit("❌ Nothing to clear.")
+        await ismgs.edit("ɴᴏᴛʜɪɴɢ ᴛᴏ ᴄʟᴇᴀʀ")

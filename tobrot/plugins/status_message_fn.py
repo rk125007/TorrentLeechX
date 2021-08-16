@@ -69,21 +69,22 @@ async def status_message_f(
             if file.status == "active":
                 is_file = file.seeder
                 if is_file is None:
-                    msgg = f"<b>Conn:</b> {file.connections}"
+                    msgg = f"「 📶: {file.connections} 」"
                 else:
-                    msgg = f"<b>Peers:</b> {file.connections} | <b>Seeders:</b> {file.num_seeders}"
+                    msgg = f"「 🌱: {file.num_seeders} 」    「 🌎: {file.connections} 」"
 
                 percentage = int(file.progress_string(0).split('%')[0])
-                prog = "[{0}{1}]".format("".join([FINISHED_PROGRESS_STR for i in range(math.floor(percentage / 5))]),"".join([UN_FINISHED_PROGRESS_STR for i in range(20 - math.floor(percentage / 5))]))
+                prog = "[{0}{1}]".format("".join([FINISHED_PROGRESS_STR for i in range(math.floor(percentage / 10))]),"".join([UN_FINISHED_PROGRESS_STR for i in range(10 - math.floor(percentage / 10))]))
 
-                msg += f"\n<b>{downloading_dir_name}</b>"
-                msg += f"\n<b>{prog}</b>"
-                msg += f"\n<b>Speed</b>: {file.download_speed_string()}"
-                msg += f"\n<b>Status</b>: {file.progress_string()} <b>of</b> {file.total_length_string()}"
-                msg += f"\n<b>ETA:</b> {file.eta_string()}"
-                msg += f"\n{msgg}"
-                msg += f"\n<b>To Cancel:</b> <code>/cancel {file.gid}</code>"
-                msg += "\n"
+                msg += f"\n<b>📥 ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ 📥</b>"
+                msg += f"\n<code>{downloading_dir_name}</code>"
+                msg += f"\n{prog}"
+                msg += f"\n💯 ᴘᴇʀᴄᴇɴᴛᴀɢᴇ: {file.progress_string()}"                
+                msg += f"\n💾 ᴛᴏᴛᴀʟ ғɪʟᴇ sɪᴢᴇ: {file.total_length_string()}"
+                msg += f"\n⏰ ᴇᴛᴀ: {file.eta_string()}"
+                msg += f"\n⚡️ sᴘᴇᴇᴅ: {file.download_speed_string()}" 
+                msg += f"\n📋 ɢɪᴅ: <code>{file.gid}</code>"
+                msg += f"\n{msgg}\n\n"
 
         hr, mi, se = up_time(time.time() - BOT_START_TIME)
         total, used, free = shutil.disk_usage(".")
@@ -94,12 +95,16 @@ async def status_message_f(
         free = humanbytes(free)
 
         ms_g = (
-            f"<b>Bot Uptime</b>: <code>{hr} : {mi} : {se}</code>\n"
-            f"<b>T:</b> <code>{total}</code> <b>U:</b> <code>{used}</code> <b>F:</b> <code>{free}</code>\n"
-            f"<b>RAM:</b> <code>{ram}%</code> <b>CPU:</b> <code>{cpu}%</code>\n"
+            f"<b>BOT STATISTICS</b>\n" \
+            f"<b>⏰ Bot Uptime : {hr} : {mi} : {se}</b>\n" \
+            f"<b>💾 Disk Space : {total}</b>\n" \
+            f"<b>📀 Used Space : {used}</b>\n" \
+            f"<b>💿 Free Space : {free}</b>\n" \
+            f"<b>🖥️ CPU : {cpu}%</b>\n" \
+            f"<b>📊 RAM : {ram}%</b>"
         )
         if msg == "":
-            msg = "🤷‍♂️ No Active, Queued or Paused TORRENTs"
+            msg = "\n🟡 ɴᴏ ᴀᴄᴛɪᴠᴇ ᴅᴏᴡɴʟᴏᴀᴅ 🟡"
             msg = ms_g + "\n" + msg
             await to_edit.edit(msg)
             break
@@ -131,7 +136,7 @@ async def status_message_f(
 async def cancel_message_f(client, message):
     if len(message.command) > 1:
         # /cancel command
-        i_m_s_e_g = await message.reply_text("checking..?", quote=True)
+        i_m_s_e_g = await message.reply_text("ᴄʜᴇᴄᴋɪɴɢ", quote=True)
         aria_i_p = await aria_start()
         g_id = message.command[1].strip()
         LOGGER.info(g_id)
@@ -145,10 +150,10 @@ async def cancel_message_f(client, message):
                 downloads = aria_i_p.get_downloads(gid_list)
             aria_i_p.remove(downloads=downloads, force=True, files=True, clean=True)
             await i_m_s_e_g.edit_text(
-                f"Download cancelled :\n<code>{name} ({size})</code> by <a href='tg://user?id={message.from_user.id}'>{message.from_user.first_name}</a>"
+                f"🔴 ᴅᴏᴡɴʟᴏᴀᴅ ᴄᴀɴᴄᴇʟʟᴇᴅ 🔴\n<code>{name}\n({size})</code>\n\n<a href='tg://user?id={message.from_user.id}'>{message.from_user.first_name}</a>\n\n#cancelled"
             )
         except Exception as e:
-            await i_m_s_e_g.edit_text("<i>FAILED</i>\n\n" + str(e) + "\n#error")
+            await i_m_s_e_g.edit_text("🔴 ғᴀɪʟᴇᴅ 🔴\n\n" + str(e) + "\n\n#error")
     else:
         await message.delete()
 
@@ -195,7 +200,7 @@ async def exec_message_f(client, message):
 
 
 async def upload_document_f(client, message):
-    imsegd = await message.reply_text("processing ...")
+    imsegd = await message.reply_text("🟡 ᴘʀᴏᴄᴇssɪɴɢ 🟡")
     if message.from_user.id in AUTH_CHANNEL:
         if " " in message.text:
             recvd_command, local_file_name = message.text.split(" ", 1)
@@ -208,7 +213,7 @@ async def upload_document_f(client, message):
 
 async def eval_message_f(client, message):
     if message.from_user.id in AUTH_CHANNEL:
-        status_message = await message.reply_text("Processing ...")
+        status_message = await message.reply_text("🟡 ᴘʀᴏᴄᴇssɪɴɢ 🟡")
         cmd = message.text.split(" ", maxsplit=1)[1]
 
         reply_to_id = message.message_id
@@ -283,9 +288,9 @@ async def upload_log_file(client, message):
 
 async def upload_as_doc(client, message):
     user_specific_config[message.from_user.id]=UserDynaConfig(message.from_user.id,True)
-    await message.reply_text("**🗞 Your Files Will Be Uploaded As Document 📁**")
+    await message.reply_text("🟢 ᴀʟʟ ʏᴏᴜʀ ғɪʟᴇ 🟢\n\nsᴇᴛ ᴜᴘʟᴏᴀᴅ ᴀs ᴅᴏᴄᴜᴍᴇɴᴛ\n\n#document")
 
 
 async def upload_as_video(client, message):
     user_specific_config[message.from_user.id]=UserDynaConfig(message.from_user.id,False)
-    await message.reply_text("**🗞 Your Files Will Be Uploaded As Streamable 🎞**")
+    await message.reply_text("🟢 ᴀʟʟ ʏᴏᴜʀ ғɪʟᴇ 🟢\n\nsᴇᴛ ᴜᴘʟᴏᴀᴅ ᴀs sᴛʀᴇᴀᴍᴀʙʟᴇ\n\n#video")

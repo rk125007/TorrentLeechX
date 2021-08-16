@@ -33,9 +33,9 @@ async def rclone_command_f(client, message):
         config = ConfigParser()
         config.read("rclone.conf")
         section = config.sections()[0]
-        msg_text = f"""Default section of rclone config is: **{section}**\n\n
-There are {len(sections)} sections in your rclone.conf file, 
-please choose which section you want to use:"""
+        msg_text = f"""ᴅᴇғᴀᴜʟᴛ sᴇᴄᴛɪᴏɴ ɪs: **{section}**\n\n
+ᴛʜᴇʀᴇ ᴀʀᴇ {len(sections)} 
+ᴄʜᴏᴏsᴇ sᴇᴄᴛɪᴏɴ ʏᴏᴜ ᴡᴀɴᴛ:"""
         ikeyboard = [
             pyrogram.InlineKeyboardButton(
                 "‼️ Cancel ‼️", callback_data=(f"rcloneCancel").encode("UTF-8")
@@ -45,7 +45,7 @@ please choose which section you want to use:"""
         reply_markup = pyrogram.InlineKeyboardMarkup(inline_keyboard)
         await message.reply_text(text=msg_text, reply_markup=reply_markup)
     else:
-        await message.reply_text("You have no permission!")
+        await message.reply_text("🔴 ɴᴏ ᴘᴇʀᴍɪssɪᴏɴ 🔴")
         LOGGER.warning(
             f"uid={message.from_user.id} have no permission to edit rclone config!"
         )
@@ -58,7 +58,7 @@ async def rclone_button_callback(bot, update: CallbackQuery):
         config.read("rclone.conf")
         section = config.sections()[0]
         await update.message.edit_text(
-            f"Opration canceled! \n\nThe default section of rclone config is: **{section}**"
+            f"🔴 ᴄᴀɴᴄᴇʟʟᴇᴅ 🔴\n\nᴅᴇғᴀᴜʟᴛ sᴇᴄᴛɪᴏɴ ɪs: **{section}**"
         )
         LOGGER.info(
             f"Opration canceled! The default section of rclone config is: {section}"
@@ -72,6 +72,6 @@ async def rclone_button_callback(bot, update: CallbackQuery):
             temp[section] = config[section]
             temp.write(f)
         await update.message.edit_text(
-            f"Default rclone config changed to **{section}**"
+            f"ᴅᴇғᴀᴜʟᴛ sᴇᴄᴛɪᴏɴ ᴄʜᴀɴɢᴇ ᴛᴏ **{section}**"
         )
         LOGGER.info(f"Default rclone config changed to {section}")
